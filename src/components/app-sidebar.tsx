@@ -1,22 +1,25 @@
 'use client';
 
+import Link from 'next/link';
 import * as React from 'react';
 import {
-  BookOpen,
+  BadgePercent,
+  Barcode,
   Bot,
   Command,
   Frame,
+  LayoutDashboard,
   LifeBuoy,
   Map,
   PieChart,
   Send,
-  Settings2,
-  SquareTerminal,
+  Users,
+  Warehouse,
 } from 'lucide-react';
 
 import { NavMain } from '@/components/nav-main';
-import { NavProjects } from '@/components/nav-projects';
-import { NavSecondary } from '@/components/nav-secondary';
+// import { NavProjects } from '@/components/nav-projects';
+// import { NavSecondary } from '@/components/nav-secondary';
 import { NavUser } from '@/components/nav-user';
 import {
   Sidebar,
@@ -27,7 +30,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import Link from 'next/link';
 
 const data = {
   user: {
@@ -37,86 +39,49 @@ const data = {
   },
   navMain: [
     {
-      title: 'Playground',
-      url: '#',
-      icon: SquareTerminal,
-      isActive: true,
-      items: [
-        {
-          title: 'History',
-          url: '#',
-        },
-        {
-          title: 'Starred',
-          url: '#',
-        },
-        {
-          title: 'Settings',
-          url: '#',
-        },
-      ],
+      title: 'Dashboard',
+      url: '/dashboard',
+      icon: LayoutDashboard,
     },
     {
-      title: 'Models',
+      title: 'Ventas',
+      url: '#',
+      icon: BadgePercent,
+    },
+    {
+      title: 'Inventario',
+      url: '#',
+      icon: Warehouse,
+    },
+    {
+      title: 'Productos',
+      url: '#',
+      icon: Barcode,
+    },
+    {
+      title: 'Usuarios',
+      url: '#',
+      icon: Users,
+    },
+    {
+      title: 'Parametrización',
       url: '#',
       icon: Bot,
       items: [
         {
-          title: 'Genesis',
+          title: 'Locales',
           url: '#',
         },
         {
-          title: 'Explorer',
+          title: 'Marcas',
           url: '#',
         },
         {
-          title: 'Quantum',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Documentation',
-      url: '#',
-      icon: BookOpen,
-      items: [
-        {
-          title: 'Introduction',
+          title: 'Categorías',
           url: '#',
         },
         {
-          title: 'Get Started',
-          url: '#',
-        },
-        {
-          title: 'Tutorials',
-          url: '#',
-        },
-        {
-          title: 'Changelog',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Settings',
-      url: '#',
-      icon: Settings2,
-      items: [
-        {
-          title: 'General',
-          url: '#',
-        },
-        {
-          title: 'Team',
-          url: '#',
-        },
-        {
-          title: 'Billing',
-          url: '#',
-        },
-        {
-          title: 'Limits',
+          title: 'Métodos de pago',
           url: '#',
         },
       ],
@@ -155,7 +120,7 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar variant='inset' {...props}>
+    <Sidebar variant='inset' collapsible='icon' {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -175,8 +140,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
-        <NavSecondary items={data.navSecondary} className='mt-auto' />
+        {/* <NavProjects projects={data.projects} /> */}
+        {/* <NavSecondary items={data.navSecondary} className='mt-auto' /> */}
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

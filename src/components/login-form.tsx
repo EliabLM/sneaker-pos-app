@@ -1,5 +1,6 @@
 'use client';
 // import Link from 'next/link';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -23,6 +24,8 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { PasswordInput } from '@/components/ui/password-input';
+import { sleep } from '@/utils/sleep';
+import { Loader2 } from 'lucide-react';
 
 const FormSchema = z.object({
   code: z
@@ -52,9 +55,15 @@ export function LoginForm() {
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    console.log(data);
+  const [isLoading, setIsLoading] = useState(false);
 
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    setIsLoading(true);
+    console.table(data);
+
+    await sleep(2);
+
+    setIsLoading(false);
     router.push('/dashboard');
   };
 
@@ -122,8 +131,9 @@ export function LoginForm() {
                   )}
                 />
               </div>
-              <Button type='submit' className='w-full'>
-                Iniciar sesión
+              <Button type='submit' className='w-full' disabled={isLoading}>
+                {isLoading && <Loader2 className='animate-spin' />}
+                {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
               </Button>
               <Button variant='outline' className='w-full'>
                 Iniciar sesión con Google
