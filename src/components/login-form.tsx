@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { Loader2 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -25,7 +26,9 @@ import {
 } from '@/components/ui/form';
 import { PasswordInput } from '@/components/ui/password-input';
 import { sleep } from '@/utils/sleep';
-import { Loader2 } from 'lucide-react';
+import { Role, User } from '@/interfaces';
+import { useAppDispatch } from '@/redux';
+import { setUser } from '@/redux/slices/userSlice';
 
 const FormSchema = z.object({
   code: z
@@ -46,6 +49,7 @@ const FormSchema = z.object({
 
 export function LoginForm() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -58,13 +62,30 @@ export function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    setIsLoading(true);
-    console.table(data);
+    try {
+      setIsLoading(true);
+      console.table(data);
 
-    await sleep(2);
+      const user: User = {
+        id: 1,
+        code: data.code,
+        name: 'Eliab López',
+        email: 'eliablopez@hotmail.com',
+        avatar: '/avatars/shadcn.jpg',
+        role: Role.SUPERADMIN,
+        active: true,
+        creation_date: new Date().toISOString(),
+      };
 
-    setIsLoading(false);
-    router.push('/dashboard');
+      dispatch(setUser(user));
+
+      await sleep(2);
+      router.push('/dashboard');
+    } catch (error) {
+      console.error('🚀 ~ onSubmit ~ error:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

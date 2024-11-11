@@ -30,13 +30,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import { useAppSelector } from '@/redux';
 
 const data = {
-  user: {
-    name: 'Eliab López',
-    email: 'eliablopez@hotmail.com',
-    avatar: '/avatars/shadcn.jpg',
-  },
   navMain: [
     {
       title: 'Dashboard',
@@ -45,22 +41,22 @@ const data = {
     },
     {
       title: 'Ventas',
-      url: '#',
+      url: '/dashboard/ventas',
       icon: BadgePercent,
     },
     {
       title: 'Inventario',
-      url: '#',
+      url: '/dashboard/inventario',
       icon: Warehouse,
     },
     {
       title: 'Productos',
-      url: '#',
+      url: '/dashboard/productos',
       icon: Barcode,
     },
     {
       title: 'Usuarios',
-      url: '#',
+      url: '/dashboard/usuarios',
       icon: Users,
     },
     {
@@ -119,6 +115,8 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { user } = useAppSelector((state) => state.userReducer);
+
   return (
     <Sidebar variant='inset' collapsible='icon' {...props}>
       <SidebarHeader>
@@ -144,7 +142,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {/* <NavSecondary items={data.navSecondary} className='mt-auto' /> */}
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
     </Sidebar>
   );
