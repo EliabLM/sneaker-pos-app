@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useRef } from 'react';
 import {
   Provider,
@@ -5,19 +6,68 @@ import {
   useDispatch,
   useSelector,
 } from 'react-redux';
-
-import { configureStore } from '@reduxjs/toolkit';
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
+import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
+
 import userReducer from './slices/userSlice';
 import globalReducer from './slices/globalSlice';
+import { PersistGate } from 'redux-persist/integration/react';
+
+// REDUX PERSISTENCE
+const createNoopStorage = () => {
+  return {
+    getItem() {
+      return Promise.resolve(null);
+    },
+    setItem(_key: any, value: any) {
+      return Promise.resolve(value);
+    },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    removeItem(_key: any) {
+      return Promise.resolve();
+    },
+  };
+};
+
+const storage =
+  typeof window === 'undefined'
+    ? createNoopStorage()
+    : createWebStorage('local');
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['userReducer', 'globalReducer'],
+};
+
+const rootReducer = combineReducers({
+  globalReducer,
+  userReducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 // REDUX STORE
 export const makeStore = () => {
   return configureStore({
-    reducer: {
-      userReducer,
-      globalReducer,
-    },
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }),
   });
 };
 
@@ -36,7 +86,15 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
     setupListeners(storeRef.current.dispatch);
   }
 
-  return <Provider store={storeRef.current}>{children}</Provider>;
+  const persistor = persistStore(storeRef.current);
+
+  return (
+    <Provider store={storeRef.current}>
+      <PersistGate loading={null} persistor={persistor}>
+        {children}
+      </PersistGate>
+    </Provider>
+  );
 };
 
 export default StoreProvider;
