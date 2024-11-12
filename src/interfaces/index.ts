@@ -14,3 +14,16 @@ export interface User {
     active: boolean;
     creation_date: string;
 }
+
+export interface Product {
+    id: number;
+    name: string;
+    description?: string;
+    image?: string;
+    stock: number;
+    price: number;
+    brand_id: number;
+    category_id: number;
+    active: boolean;
+    creation_date: string;
+}
