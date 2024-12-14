@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "Nike Air Max",
+    "description": "Zapatos deportivos de última generación para running.",
+    "image": "https://example.com/airmax.jpg",
+    "stock": 30,
+    "price": 180000,
+    "brand_id": 1,
+    "category_id": 1,
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "name": "Adidas Ultraboost",
+    "description": "Sneakers cómodos y ligeros para largas distancias.",
+    "image": "https://example.com/ultraboost.jpg",
+    "stock": 40,
+    "price": 200000,
+    "brand_id": 2,
+    "category_id": 1,
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "name": "Puma RS-X",
+    "description": "Zapatos deportivos con diseño futurista para uso diario.",
+    "image": "https://example.com/rsx.jpg",
+    "stock": 50,
+    "price": 150000,
+    "brand_id": 3,
+    "category_id": 3,
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "name": "Reebok Nano X",
+    "description": "Zapatos ideales para entrenamiento en gimnasio.",
+    "image": "https://example.com/nanox.jpg",
+    "stock": 35,
+    "price": 170000,
+    "brand_id": 4,
+    "category_id": 4,
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 5,
+    "name": "New Balance 574",
+    "description": "Sneakers clásicos y versátiles para uso diario.",
+    "image": "https://example.com/574.jpg",
+    "stock": 45,
+    "price": 160000,
+    "brand_id": 5,
+    "category_id": 3,
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  }
+]

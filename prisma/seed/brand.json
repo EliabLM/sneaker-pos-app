@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "Nike",
+    "logo": "https://example.com/nike.png",
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "name": "Adidas",
+    "logo": "https://example.com/adidas.png",
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "name": "Puma",
+    "logo": "https://example.com/puma.png",
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "name": "Reebok",
+    "logo": "https://example.com/reebok.png",
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 5,
+    "name": "New Balance",
+    "logo": "https://example.com/newbalance.png",
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  }
+]

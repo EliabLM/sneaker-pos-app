@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "purchase_id": 1,
+    "product_id": 1,
+    "quantity": 30,
+    "unit_price": 180000,
+    "subtotal": 5400000,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "purchase_id": 2,
+    "product_id": 2,
+    "quantity": 40,
+    "unit_price": 200000,
+    "subtotal": 8000000,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "purchase_id": 3,
+    "product_id": 3,
+    "quantity": 50,
+    "unit_price": 150000,
+    "subtotal": 7500000,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "purchase_id": 4,
+    "product_id": 4,
+    "quantity": 35,
+    "unit_price": 170000,
+    "subtotal": 5950000,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 5,
+    "purchase_id": 5,
+    "product_id": 5,
+    "quantity": 45,
+    "unit_price": 160000,
+    "subtotal": 7200000,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  }
+]

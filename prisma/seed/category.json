@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Running",
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "name": "Basketball",
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "name": "Lifestyle",
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "name": "Training",
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 5,
+    "name": "Futbol",
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  }
+]

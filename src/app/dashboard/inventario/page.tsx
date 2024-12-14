@@ -1,12 +1,11 @@
 import React from 'react';
-import products from '@/data/products.json';
 import { DataTable } from './data-table';
 import { columns } from './columns';
 import { Button } from '@/components/ui/button';
 import { Product } from '@/interfaces';
 
 async function fetchData() {
-  return products;
+  return [];
 }
 
 const InventarioPage = async () => {

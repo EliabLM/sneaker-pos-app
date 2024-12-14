@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Proveedor Uno",
+    "email": "ventas@proveedoruno.com",
+    "phone": "3125557890",
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "name": "Distribuidora XYZ",
+    "email": "info@xyz.com",
+    "phone": "3001112222",
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "name": "Calzado Importado S.A.",
+    "email": "contacto@calzadoimportado.com",
+    "phone": "3131231234",
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "name": "SneakerPro",
+    "email": "ventas@sneakerpro.com",
+    "phone": "3157894561",
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 5,
+    "name": "Deportivos Elite",
+    "email": "elite@deportivos.com",
+    "phone": "3176543210",
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  }
+]

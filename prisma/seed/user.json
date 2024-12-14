@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "code": "USR001",
+    "name": "Juan Pérez",
+    "email": "juan.perez@example.com",
+    "image": null,
+    "role": "SELLER",
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "code": "USR002",
+    "name": "María López",
+    "email": "maria.lopez@example.com",
+    "image": "https://example.com/maria.jpg",
+    "role": "ADMIN",
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "code": "USR003",
+    "name": "Carlos García",
+    "email": "carlos.garcia@example.com",
+    "image": null,
+    "role": "SELLER",
+    "active": false,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "code": "USR004",
+    "name": "Ana Torres",
+    "email": "ana.torres@example.com",
+    "image": null,
+    "role": "SELLER",
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 5,
+    "code": "USR005",
+    "name": "Luis Gómez",
+    "email": "luis.gomez@example.com",
+    "image": null,
+    "role": "SELLER",
+    "active": true,
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  }
+]

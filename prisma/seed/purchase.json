@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "supplier_id": 1,
+    "supplier_name": "Proveedor Uno",
+    "total": 5400000,
+    "purchase_status": "PENDING",
+    "date": "2024-12-14T10:00:00.000Z",
+    "expiration_date": "2025-12-14T10:00:00.000Z",
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "supplier_id": 2,
+    "supplier_name": "Distribuidora XYZ",
+    "total": 8000000,
+    "purchase_status": "PENDING",
+    "date": "2024-12-14T10:00:00.000Z",
+    "expiration_date": "2025-12-14T10:00:00.000Z",
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "supplier_id": 3,
+    "supplier_name": "Calzado Importado S.A.",
+    "total": 7500000,
+    "purchase_status": "PENDING",
+    "date": "2024-12-14T10:00:00.000Z",
+    "expiration_date": "2025-12-14T10:00:00.000Z",
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "supplier_id": 4,
+    "supplier_name": "SneakerPro",
+    "total": 5950000,
+    "purchase_status": "PENDING",
+    "date": "2024-12-14T10:00:00.000Z",
+    "expiration_date": "2025-12-14T10:00:00.000Z",
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  },
+  {
+    "id": 5,
+    "supplier_id": 5,
+    "supplier_name": "Deportivos Elite",
+    "total": 7200000,
+    "purchase_status": "PENDING",
+    "date": "2024-12-14T10:00:00.000Z",
+    "expiration_date": "2025-12-14T10:00:00.000Z",
+    "creation_date": "2024-12-14T10:00:00.000Z"
+  }
+]
