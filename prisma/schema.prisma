@@ -66,7 +66,7 @@ model Supplier {
 model Brand {
   id            Int       @id @default(autoincrement())
   name          String
-  logo          String
+  logo          String?
   active        Boolean   @default(true)
   creation_date DateTime  @default(now())
   Product       Product[]
@@ -117,8 +117,8 @@ model PaymentMethod {
 
 model Sale {
   id                  Int           @id @default(autoincrement())
-  user_id             Int?
-  user_name           String?
+  user_id             Int
+  user_name           String
   customer_id         Int?
   customer_name       String?
   total               Decimal

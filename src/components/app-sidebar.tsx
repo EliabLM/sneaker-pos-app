@@ -41,22 +41,22 @@ const data = {
     },
     {
       title: 'Ventas',
-      url: '/dashboard/ventas',
+      url: '/dashboard/sales',
       icon: BadgePercent,
     },
     {
       title: 'Inventario',
-      url: '/dashboard/inventario',
+      url: '/dashboard/inventory',
       icon: Warehouse,
     },
     {
       title: 'Productos',
-      url: '/dashboard/productos',
+      url: '/dashboard/products',
       icon: Barcode,
     },
     {
       title: 'Usuarios',
-      url: '/dashboard/usuarios',
+      url: '/dashboard/users',
       icon: Users,
     },
     {
@@ -66,19 +66,19 @@ const data = {
       items: [
         {
           title: 'Locales',
-          url: '#',
+          url: '/dashboard/parametrization/locations',
         },
         {
           title: 'Marcas',
-          url: '#',
+          url: '/dashboard/parametrization/brands',
         },
         {
           title: 'Categorías',
-          url: '#',
+          url: '/dashboard/parametrization/categories',
         },
         {
           title: 'Métodos de pago',
-          url: '#',
+          url: '/dashboard/parametrization/payment-methods',
         },
       ],
     },

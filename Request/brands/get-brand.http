@@ -1,0 +1,4 @@
+### Caso 1 periodos ordenados
+@host=http://localhost:3000/api
+GET {{host}}/brands?active=true
+Content-Type: application/json

@@ -27,3 +27,11 @@ export interface Product {
     active: boolean;
     creation_date: string;
 }
+
+export interface Brand {
+    id: number;
+    name: string;
+    logo: string | null;
+    active: boolean;
+    creation_date: Date;
+}
