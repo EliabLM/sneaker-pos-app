@@ -1,6 +1,5 @@
 [
   {
-    "id": 1,
     "name": "Empresa ABC",
     "email": "contacto@abc.com",
     "phone": "3201234567",
@@ -8,7 +7,6 @@
     "creation_date": "2024-12-14T10:00:00.000Z"
   },
   {
-    "id": 2,
     "name": "Luis Torres",
     "email": "luis.torres@example.com",
     "phone": "3109876543",
@@ -16,7 +14,6 @@
     "creation_date": "2024-12-14T10:00:00.000Z"
   },
   {
-    "id": 3,
     "name": "María Fernández",
     "email": "maria.fernandez@example.com",
     "phone": "3056781234",
@@ -24,7 +21,6 @@
     "creation_date": "2024-12-14T10:00:00.000Z"
   },
   {
-    "id": 4,
     "name": "Carlos Pérez",
     "email": "carlos.perez@example.com",
     "phone": "3004567890",
@@ -32,7 +28,6 @@
     "creation_date": "2024-12-14T10:00:00.000Z"
   },
   {
-    "id": 5,
     "name": "Ana Ruiz",
     "email": "ana.ruiz@example.com",
     "phone": "3123456789",

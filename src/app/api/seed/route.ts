@@ -88,12 +88,10 @@ export async function main() {
         }
 
         console.log(`Seeded ${modelName} with data from ${fileName}`);
-
-        console.log('✅ Seeding complete!');
     }
+
+    console.log('✅ Seeding complete!');
 }
-
-
 
 //req is short for request
 export async function GET() {
@@ -113,6 +111,33 @@ export async function GET() {
         );
     } catch (error) {
         console.error("🚀 ~ GET ~ error:", error)
+    }
+}
 
+export async function DELETE() {
+    try {
+        const orderedFileNames = [
+            "brand.json",
+            "category.json",
+            "location.json",
+            "paymentMethod.json",
+            "product.json",
+            "user.json",
+            "supplier.json",
+            "customer.json",
+            "sale.json",
+            "saleDetail.json",
+            "purchase.json",
+            "purchaseDetail.json",
+        ];
+
+        await deleteAllData(orderedFileNames.reverse());
+
+        return NextResponse.json({
+            message: 'Data deleted successfully',
+            status: 200
+        })
+    } catch (error) {
+        console.error("🚀 ~ DELETE ~ error:", error)
     }
 }

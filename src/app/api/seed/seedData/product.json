@@ -1,6 +1,5 @@
 [
   {
-    "id": 1,
     "name": "Nike Air Max",
     "description": "Zapatos deportivos de última generación para running.",
     "image": "https://example.com/airmax.jpg",
@@ -12,7 +11,6 @@
     "creation_date": "2024-12-14T10:00:00.000Z"
   },
   {
-    "id": 2,
     "name": "Adidas Ultraboost",
     "description": "Sneakers cómodos y ligeros para largas distancias.",
     "image": "https://example.com/ultraboost.jpg",
@@ -24,7 +22,6 @@
     "creation_date": "2024-12-14T10:00:00.000Z"
   },
   {
-    "id": 3,
     "name": "Puma RS-X",
     "description": "Zapatos deportivos con diseño futurista para uso diario.",
     "image": "https://example.com/rsx.jpg",
@@ -36,7 +33,6 @@
     "creation_date": "2024-12-14T10:00:00.000Z"
   },
   {
-    "id": 4,
     "name": "Reebok Nano X",
     "description": "Zapatos ideales para entrenamiento en gimnasio.",
     "image": "https://example.com/nanox.jpg",
@@ -48,7 +44,6 @@
     "creation_date": "2024-12-14T10:00:00.000Z"
   },
   {
-    "id": 5,
     "name": "New Balance 574",
     "description": "Sneakers clásicos y versátiles para uso diario.",
     "image": "https://example.com/574.jpg",

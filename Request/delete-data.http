@@ -1,0 +1,7 @@
+@host=http://localhost:3000/api
+DELETE {{host}}/seed
+Content-Type: application/json
+
+####
+GET {{host}}/seed
+Content-Type: application/json

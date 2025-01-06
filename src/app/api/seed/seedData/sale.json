@@ -1,6 +1,5 @@
 [
   {
-    "id": 1,
     "user_id": 1,
     "user_name": "Juan Pérez",
     "customer_id": 1,
@@ -15,7 +14,6 @@
     "creation_date": "2024-12-14T10:00:00Z"
   },
   {
-    "id": 2,
     "user_id": 2,
     "user_name": "María López",
     "customer_id": null,
@@ -30,7 +28,6 @@
     "creation_date": "2024-12-13T14:00:00Z"
   },
   {
-    "id": 3,
     "user_id": 3,
     "user_name": "Carlos García",
     "customer_id": 3,
@@ -45,7 +42,6 @@
     "creation_date": "2024-12-12T15:30:00Z"
   },
   {
-    "id": 4,
     "user_id": 4,
     "user_name": "Ana Torres",
     "customer_id": 4,
@@ -60,7 +56,6 @@
     "creation_date": "2024-12-11T09:45:00Z"
   },
   {
-    "id": 5,
     "user_id": 5,
     "user_name": "Luis Gómez",
     "customer_id": 4,

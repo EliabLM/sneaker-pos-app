@@ -1,13 +1,30 @@
 'use client';
 
-import { ColumnDef, SortDirection } from '@tanstack/react-table';
+import { ColumnDef, FilterFn, Row, SortDirection } from '@tanstack/react-table';
 import { ChevronDown } from 'lucide-react';
 
-import { Badge } from '@/components/ui/badge';
-
 import { Brand } from '@/interfaces';
+import Actions from './column-actions';
+
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import Actions from './actions';
+// import { Checkbox } from '@/components/ui/checkbox';
+
+const myCustomFilterFn: FilterFn<Brand> = (
+  row: Row<Brand>,
+  columnId: string,
+  filterValue: string,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
+  addMeta: (meta: any) => void
+) => {
+  filterValue = filterValue.toLowerCase();
+  const filterParts = filterValue.split(' ');
+  const rowValues = `${row.original.id} ${row.original.name}`.toLowerCase();
+
+  return filterParts.every((filterPart) => {
+    return rowValues.includes(filterPart);
+  });
+};
 
 const SortedIcon = ({ isSorted }: { isSorted: SortDirection | false }) => {
   if (isSorted === 'asc') {
@@ -22,8 +39,31 @@ const SortedIcon = ({ isSorted }: { isSorted: SortDirection | false }) => {
 };
 
 export const columns: ColumnDef<Brand>[] = [
+  // {
+  //   id: 'select',
+  //   header: ({ table }) => (
+  //     <Checkbox
+  //       checked={
+  //         table.getIsAllPageRowsSelected() ||
+  //         (table.getIsSomePageRowsSelected() && 'indeterminate')
+  //       }
+  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+  //       aria-label='Select all'
+  //     />
+  //   ),
+  //   cell: ({ row }) => (
+  //     <Checkbox
+  //       checked={row.getIsSelected()}
+  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
+  //       aria-label='Select row'
+  //     />
+  //   ),
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
   {
     accessorKey: 'id',
+    filterFn: myCustomFilterFn,
     header: ({ column }) => {
       return (
         <Button
@@ -38,6 +78,7 @@ export const columns: ColumnDef<Brand>[] = [
   },
   {
     accessorKey: 'name',
+    filterFn: myCustomFilterFn,
     header: ({ column }) => {
       return (
         <Button
@@ -52,7 +93,7 @@ export const columns: ColumnDef<Brand>[] = [
   },
   {
     accessorKey: 'active',
-    header: 'Activo',
+    header: 'Estado',
     cell: ({ row }) => {
       const active = row.getValue('active');
 
@@ -66,7 +107,6 @@ export const columns: ColumnDef<Brand>[] = [
   {
     id: 'actions',
     enableHiding: false,
-    header: 'Acciones',
     cell: ({ row }) => {
       const brand = row.original;
       return <Actions brand={brand} />;

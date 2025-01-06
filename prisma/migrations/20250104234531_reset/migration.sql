@@ -49,7 +49,7 @@ CREATE TABLE "Supplier" (
 CREATE TABLE "Brand" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "logo" TEXT NOT NULL,
+    "logo" TEXT,
     "active" BOOLEAN NOT NULL DEFAULT true,
     "creation_date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -107,8 +107,8 @@ CREATE TABLE "PaymentMethod" (
 -- CreateTable
 CREATE TABLE "Sale" (
     "id" SERIAL NOT NULL,
-    "user_id" INTEGER,
-    "user_name" TEXT,
+    "user_id" INTEGER NOT NULL,
+    "user_name" TEXT NOT NULL,
     "customer_id" INTEGER,
     "customer_name" TEXT,
     "total" DECIMAL(65,30) NOT NULL,
@@ -134,16 +134,6 @@ CREATE TABLE "SaleDetail" (
     "creation_date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "SaleDetail_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "SalesSummary" (
-    "id" SERIAL NOT NULL,
-    "total" DECIMAL(65,30) NOT NULL,
-    "changePercentage" DECIMAL(65,30) NOT NULL,
-    "creation_date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT "SalesSummary_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -173,16 +163,6 @@ CREATE TABLE "PurchaseDetail" (
     CONSTRAINT "PurchaseDetail_pkey" PRIMARY KEY ("id")
 );
 
--- CreateTable
-CREATE TABLE "PurchaseSummary" (
-    "id" SERIAL NOT NULL,
-    "total" DECIMAL(65,30) NOT NULL,
-    "changePercentage" DECIMAL(65,30) NOT NULL,
-    "creation_date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT "PurchaseSummary_pkey" PRIMARY KEY ("id")
-);
-
 -- CreateIndex
 CREATE UNIQUE INDEX "User_code_key" ON "User"("code");
 
@@ -193,7 +173,7 @@ ALTER TABLE "Product" ADD CONSTRAINT "Product_brand_id_fkey" FOREIGN KEY ("brand
 ALTER TABLE "Product" ADD CONSTRAINT "Product_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "Category"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Sale" ADD CONSTRAINT "Sale_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Sale" ADD CONSTRAINT "Sale_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Sale" ADD CONSTRAINT "Sale_customer_id_fkey" FOREIGN KEY ("customer_id") REFERENCES "Customer"("id") ON DELETE SET NULL ON UPDATE CASCADE;
