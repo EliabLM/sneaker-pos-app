@@ -35,3 +35,12 @@ export interface Brand {
     active: boolean;
     creation_date: Date;
 }
+
+export interface Location {
+    id: number;
+    name: string;
+    description?: string;
+    address: string;
+    active: boolean;
+    creation_date: Date;
+}

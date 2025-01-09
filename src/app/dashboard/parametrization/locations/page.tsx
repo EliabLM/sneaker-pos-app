@@ -1,54 +1,35 @@
-'use client';
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
-import React from 'react';
+import TableHeader from '@/components/ui/table-header';
+import prisma from '@/lib/db';
 
-import { ResponsiveDialog } from '@/components/responsive-dialog';
-import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { MoreHorizontal, SquarePen, Trash2 } from 'lucide-react';
+import { DataTable } from '../shared/data-table';
+import { columns } from './components/columns';
+import CreateLocationForm from './components/create-location-form';
 
-const LocationsPage = () => {
-  const [open, setOpen] = React.useState(false);
-  const [menuOpen, setMenuOpen] = React.useState(false);
+export const metadata = {
+  title: 'Locales',
+  description: 'Administra todos tus locales existentes o agrega uno nuevo',
+};
+
+const LocationPage = async () => {
+  const locations = await prisma.location.findMany({ orderBy: { id: 'asc' } });
 
   return (
     <div className='p-2'>
-      <Button onClick={() => setOpen(true)}>Abrir dialogo</Button>
-      <ResponsiveDialog title='testing' open={open} setOpen={setOpen}>
-        <div>hola</div>
-      </ResponsiveDialog>
+      <TableHeader
+        title='Locales'
+        subtitle='Administra todos tus locales existentes o agrega uno nuevo'
+      >
+        <CreateLocationForm />
+      </TableHeader>
 
-      <DropdownMenu open={menuOpen} onOpenChange={setMenuOpen}>
-        <DropdownMenuTrigger asChild>
-          <Button variant='ghost' className='h-8 w-8 p-0'>
-            <span className='sr-only'>Open menu</span>
-            <MoreHorizontal />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align='end' className='z-50'>
-          <DropdownMenuItem
-            onSelect={(e) => {
-              e.preventDefault();
-
-              setMenuOpen(false);
-              setOpen(true);
-            }}
-          >
-            <SquarePen /> Editar
-          </DropdownMenuItem>
-
-          <DropdownMenuItem>
-            <Trash2 /> Eliminar
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <div className='w-full max-w-screen-xl px-4 mx-auto lg:px-12 mt-5'>
+        <DataTable columns={columns} data={locations} />
+      </div>
     </div>
   );
 };
 
-export default LocationsPage;
+export default LocationPage;

@@ -75,7 +75,7 @@ export const deleteBrand = async (id: number): Promise<Response> => {
     } else {
       return {
         code: 500,
-        message: 'Hubo un error al crear el marca',
+        message: 'Hubo un error al eliminar la marca',
         data: null
       }
     }
