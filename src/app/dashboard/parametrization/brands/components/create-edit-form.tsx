@@ -24,7 +24,11 @@ import { Brand } from '@/interfaces';
 import { createBrand, updateBrand } from '../brand-actions';
 
 const FormSchema = yup.object().shape({
-  name: yup.string().required('El nombre es obligatorio').trim(),
+  name: yup
+    .string()
+    .required('El nombre es obligatorio')
+    .max(50, 'Puede ingresar máximo 50 caracteres')
+    .trim(),
   active: yup.boolean().default(true),
 });
 

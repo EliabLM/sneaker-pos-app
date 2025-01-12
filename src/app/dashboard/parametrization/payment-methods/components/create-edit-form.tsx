@@ -5,7 +5,7 @@ import { Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Category } from '@prisma/client';
+import { PaymentMethod } from '@prisma/client';
 
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -21,7 +21,10 @@ import { Switch } from '@/components/ui/switch';
 
 import { toast } from '@/hooks/use-toast';
 
-import { createCategory, updateCategory } from '../category-actions';
+import {
+  createPaymentMethod,
+  updatePaymentMethod,
+} from '../payment-method-actions';
 
 const FormSchema = yup.object().shape({
   name: yup
@@ -35,16 +38,16 @@ const FormSchema = yup.object().shape({
 type FormData = yup.InferType<typeof FormSchema>;
 
 interface Props {
-  category?: Category;
+  paymentMethod?: PaymentMethod;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const CreateEditForm = ({ category, setOpen }: Props) => {
+const CreateEditForm = ({ paymentMethod, setOpen }: Props) => {
   const form = useForm<FormData>({
     resolver: yupResolver(FormSchema),
     defaultValues: {
-      name: category?.name || '',
-      active: category?.active,
+      name: paymentMethod?.name || '',
+      active: paymentMethod?.active,
     },
   });
 
@@ -55,17 +58,21 @@ const CreateEditForm = ({ category, setOpen }: Props) => {
       setIsLoading(true);
 
       let response;
-      if (category) {
-        response = await updateCategory(category.id, data.name, data.active);
+      if (paymentMethod) {
+        response = await updatePaymentMethod(
+          paymentMethod.id,
+          data.name,
+          data.active
+        );
       } else {
-        response = await createCategory(data.name);
+        response = await createPaymentMethod(data.name);
       }
 
       if (response.code !== 200) {
         toast({
-          title: category
-            ? 'Error actualizando la categoría'
-            : 'Error al crear la categoría',
+          title: paymentMethod
+            ? 'Error actualizando el método de pago'
+            : 'Error al crear el método de pago',
           description: response.message,
           variant: 'destructive',
         });
@@ -99,7 +106,7 @@ const CreateEditForm = ({ category, setOpen }: Props) => {
           )}
         />
 
-        {category && (
+        {paymentMethod && (
           <FormField
             control={form.control}
             name='active'

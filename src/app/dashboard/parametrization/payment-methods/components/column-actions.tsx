@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Loader2, MoreHorizontal, SquarePen, Trash2 } from 'lucide-react';
-import { Brand } from '@prisma/client';
+import { PaymentMethod } from '@prisma/client';
 
 import {
   DropdownMenu,
@@ -15,10 +15,10 @@ import { ResponsiveDialog } from '@/components/responsive-dialog';
 
 import { useToast } from '@/hooks/use-toast';
 
-import { deleteBrand } from '../brand-actions';
+import { deletePaymentMethod } from '../payment-method-actions';
 import CreateEditForm from './create-edit-form';
 
-const Actions = ({ brand }: { brand: Brand }) => {
+const Actions = ({ paymentMethod }: { paymentMethod: PaymentMethod }) => {
   const { toast } = useToast();
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -30,11 +30,11 @@ const Actions = ({ brand }: { brand: Brand }) => {
     try {
       setIsLoading(true);
 
-      const response = await deleteBrand(brand.id);
+      const response = await deletePaymentMethod(paymentMethod.id);
 
       if (response.code !== 200) {
         toast({
-          title: 'Error al eliminar la marca',
+          title: 'Error al eliminar el método de pago',
           description: response.message,
           variant: 'destructive',
         });
@@ -45,8 +45,8 @@ const Actions = ({ brand }: { brand: Brand }) => {
       setIsDeleteOpen(false);
 
       toast({
-        title: 'Marca eliminada',
-        description: 'La marca ha sido eliminada correctamente',
+        title: 'Método de pago eliminado',
+        description: 'El método de pago ha sido eliminado correctamente',
         variant: 'default',
       });
     } catch (error) {
@@ -61,8 +61,8 @@ const Actions = ({ brand }: { brand: Brand }) => {
       <ResponsiveDialog
         open={isDeleteOpen}
         setOpen={setIsDeleteOpen}
-        title='Eliminar marca'
-        description='¿Estás seguro de que quieres eliminar esta marca?'
+        title='Eliminar método de pago'
+        description='¿Estás seguro de que quieres eliminar este método de pago?'
       >
         <div className='flex justify-between lg:justify-end gap-2 p-2'>
           <Button
@@ -93,10 +93,10 @@ const Actions = ({ brand }: { brand: Brand }) => {
       <ResponsiveDialog
         open={isEditOpen}
         setOpen={setIsEditOpen}
-        title='Editar marca'
+        title='Editar método de pago'
         description='Da click en guardar cuando hayas terminado.'
       >
-        <CreateEditForm setOpen={setIsEditOpen} brand={brand} />
+        <CreateEditForm setOpen={setIsEditOpen} paymentMethod={paymentMethod} />
       </ResponsiveDialog>
 
       <DropdownMenu open={menuOpen} onOpenChange={setMenuOpen}>

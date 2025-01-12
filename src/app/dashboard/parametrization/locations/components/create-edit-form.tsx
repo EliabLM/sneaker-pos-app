@@ -25,8 +25,15 @@ import { createLocation, updateLocation } from '../locations-actions';
 import { Textarea } from '@/components/ui/textarea';
 
 const FormSchema = yup.object().shape({
-  name: yup.string().required('El nombre es obligatorio').trim(),
-  description: yup.string().trim(),
+  name: yup
+    .string()
+    .required('El nombre es obligatorio')
+    .max(50, 'Puede ingresar máximo 50 caracteres')
+    .trim(),
+  description: yup
+    .string()
+    .max(200, 'Puede ingresar máximo 200 caracteres')
+    .trim(),
   address: yup.string().trim().required('La dirección es obligatoria'),
   active: yup.boolean().default(true),
 });
