@@ -4,13 +4,34 @@ import prisma from "@/lib/db";
 import { Category } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-interface Response {
+export interface CategoryResponse {
     code: number;
     message: string;
-    data: Category | Category[] | null
+    data: Category[] | null
 }
 
-export const createCategory = async (name: string): Promise<Response> => {
+export const getCategories = async (active?: boolean): Promise<CategoryResponse> => {
+
+    try {
+        const categories = await prisma.category.findMany({ where: { active } });
+
+        return {
+            code: 200,
+            message: 'Consulta exitosa',
+            data: categories
+        }
+    } catch (error) {
+        console.error('🚀 ~ getCategories ~ error', error);
+
+        return {
+            code: 500,
+            message: 'Hubo un error al consultar las categorías',
+            data: null
+        }
+    }
+};
+
+export const createCategory = async (name: string): Promise<CategoryResponse> => {
     try {
 
         if (!name) {
@@ -24,7 +45,7 @@ export const createCategory = async (name: string): Promise<Response> => {
         return {
             code: 200,
             message: 'Categoría creada correctamente',
-            data: category
+            data: [category]
         }
     } catch (error) {
         console.error('🚀 ~ createCategory ~ error', error);
@@ -45,7 +66,7 @@ export const createCategory = async (name: string): Promise<Response> => {
     }
 };
 
-export const deleteCategory = async (id: number): Promise<Response> => {
+export const deleteCategory = async (id: number): Promise<CategoryResponse> => {
     try {
 
         const category = await prisma.product.findFirst({ where: { category_id: id } });
@@ -61,7 +82,7 @@ export const deleteCategory = async (id: number): Promise<Response> => {
         return {
             code: 200,
             message: 'Categoría borrada correctamente',
-            data: deletedCategory
+            data: [deletedCategory]
         }
     } catch (error) {
         console.error("🚀 ~ deleteCategory ~ error:", error);
@@ -82,7 +103,7 @@ export const deleteCategory = async (id: number): Promise<Response> => {
     }
 }
 
-export const updateCategory = async (id: number, name: string, active: boolean): Promise<Response> => {
+export const updateCategory = async (id: number, name: string, active: boolean): Promise<CategoryResponse> => {
     try {
 
         if (!name) {
@@ -99,7 +120,7 @@ export const updateCategory = async (id: number, name: string, active: boolean):
         return {
             code: 200,
             message: 'Categoría actualizada correctamente',
-            data: category
+            data: [category]
         }
     } catch (error) {
         console.error('🚀 ~ updateCategory ~ error', error);

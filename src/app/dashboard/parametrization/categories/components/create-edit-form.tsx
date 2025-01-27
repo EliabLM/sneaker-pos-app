@@ -22,6 +22,8 @@ import { Switch } from '@/components/ui/switch';
 import { toast } from '@/hooks/use-toast';
 
 import { createCategory, updateCategory } from '../category-actions';
+import { useAppDispatch } from '@/redux';
+import { api } from '@/redux/api';
 
 const FormSchema = yup.object().shape({
   name: yup
@@ -40,6 +42,8 @@ interface Props {
 }
 
 const CreateEditForm = ({ category, setOpen }: Props) => {
+  const dispatch = useAppDispatch();
+
   const form = useForm<FormData>({
     resolver: yupResolver(FormSchema),
     defaultValues: {
@@ -57,6 +61,7 @@ const CreateEditForm = ({ category, setOpen }: Props) => {
       let response;
       if (category) {
         response = await updateCategory(category.id, data.name, data.active);
+        dispatch(api.util.invalidateTags(['Category']));
       } else {
         response = await createCategory(data.name);
       }

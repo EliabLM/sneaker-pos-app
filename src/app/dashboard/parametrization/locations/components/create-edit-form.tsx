@@ -18,11 +18,10 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Switch } from '@/components/ui/switch';
+import { Textarea } from '@/components/ui/textarea';
 
 import { toast } from '@/hooks/use-toast';
-
 import { createLocation, updateLocation } from '../locations-actions';
-import { Textarea } from '@/components/ui/textarea';
 
 const FormSchema = yup.object().shape({
   name: yup

@@ -21,6 +21,7 @@ interface Props {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   title: string;
   description?: string;
+  width?: string;
 }
 
 export function ResponsiveDialog({
@@ -29,13 +30,14 @@ export function ResponsiveDialog({
   setOpen,
   title,
   description,
+  width = '425px',
 }: Props) {
   const isMobile = useIsMobile();
 
   if (!isMobile) {
     return (
       <Dialog open={open} onOpenChange={setOpen} modal>
-        <DialogContent className='sm:max-w-[425px] z-100'>
+        <DialogContent className={`sm:max-w-[${width}]`}>
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
             {description && (
@@ -50,7 +52,7 @@ export function ResponsiveDialog({
 
   return (
     <Drawer open={open} onOpenChange={setOpen} modal>
-      <DrawerContent className='z-100'>
+      <DrawerContent>
         <DrawerHeader className='text-left'>
           <DrawerTitle>{title}</DrawerTitle>
           {description && <DrawerDescription>{description}</DrawerDescription>}

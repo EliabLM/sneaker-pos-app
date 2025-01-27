@@ -4,13 +4,34 @@ import prisma from "@/lib/db";
 import { Brand } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-interface Response {
+export interface BrandResponse {
   code: number;
   message: string;
-  data: Brand | Brand[] | null
+  data: Brand[] | null
 }
 
-export const createBrand = async (name: string): Promise<Response> => {
+export const getBrands = async (active?: boolean): Promise<BrandResponse> => {
+
+  try {
+    const brands = await prisma.brand.findMany({ where: { active } });
+
+    return {
+      code: 200,
+      message: 'Consulta exitosa',
+      data: brands
+    }
+  } catch (error) {
+    console.error('🚀 ~ getBrands ~ error', error);
+
+    return {
+      code: 500,
+      message: 'Hubo un error al consultar las marcas',
+      data: null
+    }
+  }
+};
+
+export const createBrand = async (name: string): Promise<BrandResponse> => {
   try {
 
     if (!name) {
@@ -24,7 +45,7 @@ export const createBrand = async (name: string): Promise<Response> => {
     return {
       code: 200,
       message: 'Creado correctamente',
-      data: brand
+      data: [brand]
     }
   } catch (error) {
     console.error('🚀 ~ createBrand ~ error', error);
@@ -45,7 +66,7 @@ export const createBrand = async (name: string): Promise<Response> => {
   }
 };
 
-export const deleteBrand = async (id: number): Promise<Response> => {
+export const deleteBrand = async (id: number): Promise<BrandResponse> => {
   try {
 
     const brand = await prisma.product.findFirst({ where: { brand_id: id } });
@@ -61,7 +82,7 @@ export const deleteBrand = async (id: number): Promise<Response> => {
     return {
       code: 200,
       message: 'Borrado correctamente',
-      data: deletedBrand
+      data: [deletedBrand]
     }
   } catch (error) {
     console.error("🚀 ~ deleteBrand ~ error:", error);
@@ -82,7 +103,7 @@ export const deleteBrand = async (id: number): Promise<Response> => {
   }
 }
 
-export const updateBrand = async (id: number, name: string, active: boolean): Promise<Response> => {
+export const updateBrand = async (id: number, name: string, active: boolean): Promise<BrandResponse> => {
   try {
 
     if (!name) {
@@ -99,7 +120,7 @@ export const updateBrand = async (id: number, name: string, active: boolean): Pr
     return {
       code: 200,
       message: 'Actualizado correctamente',
-      data: brand
+      data: [brand]
     }
   } catch (error) {
     console.error('🚀 ~ updateBrand ~ error', error);

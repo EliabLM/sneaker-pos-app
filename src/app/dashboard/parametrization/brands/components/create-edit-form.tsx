@@ -22,6 +22,8 @@ import { toast } from '@/hooks/use-toast';
 import { Brand } from '@/interfaces';
 
 import { createBrand, updateBrand } from '../brand-actions';
+import { useAppDispatch } from '@/redux';
+import { api } from '@/redux/api';
 
 const FormSchema = yup.object().shape({
   name: yup
@@ -40,6 +42,8 @@ interface Props {
 }
 
 const CreateEditForm = ({ brand, setOpen }: Props) => {
+  const dispatch = useAppDispatch();
+
   const form = useForm<FormData>({
     resolver: yupResolver(FormSchema),
     defaultValues: {
@@ -57,6 +61,7 @@ const CreateEditForm = ({ brand, setOpen }: Props) => {
       let response;
       if (brand) {
         response = await updateBrand(brand.id, data.name, data.active);
+        dispatch(api.util.invalidateTags(['Brand']));
       } else {
         response = await createBrand(data.name);
       }

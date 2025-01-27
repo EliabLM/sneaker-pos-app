@@ -23,6 +23,7 @@ import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 import userReducer from './slices/userSlice';
 import globalReducer from './slices/globalSlice';
 import { PersistGate } from 'redux-persist/integration/react';
+import { api } from './api';
 
 // REDUX PERSISTENCE
 const createNoopStorage = () => {
@@ -54,6 +55,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   globalReducer,
   userReducer,
+  [api.reducerPath]: api.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -67,7 +69,7 @@ export const makeStore = () => {
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
-      }),
+      }).concat(api.middleware),
   });
 };
 
