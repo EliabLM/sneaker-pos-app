@@ -2,11 +2,11 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 import TableHeader from '@/components/ui/table-header';
-import prisma from '@/lib/db';
 
 import { DataTable } from '../shared/data-table';
 import { columns } from './components/columns';
 import CreateBrandForm from './components/create-brand-form';
+import { getBrands } from './brand-actions';
 
 export const metadata = {
   title: 'Marcas',
@@ -14,7 +14,7 @@ export const metadata = {
 };
 
 const BrandPage = async () => {
-  const brands = await prisma.brand.findMany({ orderBy: { id: 'asc' } });
+  const brandsResponse = await getBrands();
 
   return (
     <div className='p-2'>
@@ -26,7 +26,7 @@ const BrandPage = async () => {
       </TableHeader>
 
       <div className='w-full max-w-screen-xl px-4 mx-auto lg:px-12 mt-5'>
-        <DataTable columns={columns} data={brands} />
+        <DataTable columns={columns} data={brandsResponse.data || []} />
       </div>
     </div>
   );

@@ -13,7 +13,7 @@ export interface CategoryResponse {
 export const getCategories = async (active?: boolean): Promise<CategoryResponse> => {
 
     try {
-        const categories = await prisma.category.findMany({ where: { active } });
+        const categories = await prisma.category.findMany({ where: { active }, orderBy: { id: 'asc' } });
 
         return {
             code: 200,

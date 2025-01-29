@@ -2,11 +2,11 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 import TableHeader from '@/components/ui/table-header';
-import prisma from '@/lib/db';
 
 import { DataTable } from '../shared/data-table';
 import { columns } from './components/columns';
 import CreatePaymentMethodForm from './components/create-payment-method-form';
+import { getPaymentMethods } from './payment-method-actions';
 
 export const metadata = {
   title: 'Métodos de pago',
@@ -15,9 +15,7 @@ export const metadata = {
 };
 
 const PaymentMethodPage = async () => {
-  const paymentMethods = await prisma.paymentMethod.findMany({
-    orderBy: { id: 'asc' },
-  });
+  const paymentMethodsResponse = await getPaymentMethods();
 
   return (
     <div className='p-2'>
@@ -29,7 +27,7 @@ const PaymentMethodPage = async () => {
       </TableHeader>
 
       <div className='w-full max-w-screen-xl px-4 mx-auto lg:px-12 mt-5'>
-        <DataTable columns={columns} data={paymentMethods} />
+        <DataTable columns={columns} data={paymentMethodsResponse.data || []} />
       </div>
     </div>
   );

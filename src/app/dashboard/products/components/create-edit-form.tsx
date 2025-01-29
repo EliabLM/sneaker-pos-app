@@ -5,8 +5,8 @@ import { Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Product } from '@prisma/client';
 import numeral from 'numeral';
+import { Product } from '@prisma/client';
 
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -35,6 +35,8 @@ import { BrandResponse } from '@/app/dashboard/parametrization/brands/brand-acti
 import { CategoryResponse } from '@/app/dashboard/parametrization/categories/category-actions';
 import { unformat } from '@/utils/unformat';
 
+import { createProduct, updateProduct } from '../product-actions';
+
 const FormSchema = yup.object().shape({
   name: yup
     .string()
@@ -46,9 +48,21 @@ const FormSchema = yup.object().shape({
     .max(200, 'Puede ingresar máximo 200 caracteres')
     .trim(),
   brand: yup.string().required('La marca es obligatoria'),
-  category: yup.string(),
-  stock: yup.string(),
-  price: yup.string(),
+  category: yup.string().default(''),
+  image: yup.string().default(''),
+  stock: yup
+    .number()
+    .required('El stock es obligatorio')
+    .typeError('El stock es obligatorio')
+    .default(0)
+    .min(0, 'El stock debe ser mayor o igual a 0')
+    .integer('El stock debe ser un número entero'),
+  price: yup.number().default(0).min(0, 'El precio debe ser mayor o igual a 0'),
+  // price: yup.string().default('0').test('is-valid-currency', 'El precio debe ser un número válido', (value) => {
+  //   if (!value) return true;
+  //   const numberValue = parseFloat(value);
+  //   return !isNaN(numberValue);
+  // }),
   active: yup.boolean().default(true),
 });
 
@@ -60,6 +74,7 @@ interface Props {
 }
 
 const CreateEditForm = ({ product, setOpen }: Props) => {
+  console.log('🚀 ~ CreateEditForm ~ product:', product);
   const { data: brandsRes } = useGetMarcasQuery(true);
   const { data: categoriesRes } = useGetCategoriesQuery(true);
 
@@ -74,6 +89,11 @@ const CreateEditForm = ({ product, setOpen }: Props) => {
       name: product?.name || '',
       description: product?.description || '',
       active: product?.active,
+      stock: product?.stock || 0,
+      price: Number(product?.price) || 0,
+      brand: product?.brand_id.toString() || '',
+      category: product?.category_id?.toString() || '',
+      image: product?.image ?? undefined,
     },
   });
 
@@ -82,6 +102,39 @@ const CreateEditForm = ({ product, setOpen }: Props) => {
       setIsLoading(true);
       console.log('🚀 ~ onSubmit ~ data:', data);
 
+      const body = {
+        name: data.name,
+        description: data.description,
+        image: undefined,
+        stock: data.stock,
+        price: data.price,
+        brand_id: Number(data.brand),
+        category_id: data.category ? Number(data.category) : undefined,
+        active: data.active,
+      };
+      console.log('🚀 ~ onSubmit ~ body:', body);
+
+      let response;
+      if (product) {
+        response = await updateProduct(body, product.id);
+      } else {
+        response = await createProduct(body);
+      }
+      console.log('🚀 ~ onSubmit ~ response:', response);
+
+      if (response.code !== 200) {
+        toast({
+          title: product
+            ? 'Error actualizando el producto'
+            : 'Error al crear el producto',
+          description: response.message,
+          variant: 'destructive',
+        });
+
+        return;
+      }
+
+      form.reset();
       setOpen(false);
     } catch (error) {
       console.error('🚀 ~ onSubmit ~ error:', error);
@@ -221,7 +274,7 @@ const CreateEditForm = ({ product, setOpen }: Props) => {
                       onBlur={(e) => {
                         const rawValue = unformat(e.target.value);
                         field.onChange(rawValue);
-                        e.target.value = numeral(rawValue).format('$0,0.00');
+                        e.target.value = numeral(rawValue).format('$0,0');
                       }}
                       onFocus={(e) => {
                         const rawValue = unformat(e.target.value);

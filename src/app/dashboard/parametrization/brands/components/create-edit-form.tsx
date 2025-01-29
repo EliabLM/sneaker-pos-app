@@ -61,11 +61,11 @@ const CreateEditForm = ({ brand, setOpen }: Props) => {
       let response;
       if (brand) {
         response = await updateBrand(brand.id, data.name, data.active);
-        dispatch(api.util.invalidateTags(['Brand']));
       } else {
         response = await createBrand(data.name);
       }
 
+      dispatch(api.util.invalidateTags(['Brand']));
       if (response.code !== 200) {
         toast({
           title: brand

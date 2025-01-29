@@ -4,13 +4,42 @@ import prisma from "@/lib/db";
 import { Location } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-interface Response {
+interface LocationResponse {
     code: number;
     message: string;
-    data: Location | Location[] | null
+    data: Location[] | null
 }
 
-export const createLocation = async (name: string, address: string, description: string | undefined): Promise<Response> => {
+export const getLocations = async (active?: boolean): Promise<LocationResponse> => {
+
+    try {
+        const locations = await prisma.location.findMany({ where: { active }, orderBy: { id: 'asc' } });
+
+        return {
+            code: 200,
+            message: 'Consulta exitosa',
+            data: locations
+        }
+    } catch (error) {
+        console.error('🚀 ~ getLocations ~ error', error);
+
+        if (error instanceof Error) {
+            return {
+                code: 400,
+                message: error.message,
+                data: null
+            }
+        } else {
+            return {
+                code: 500,
+                message: 'Hubo un error al consultar los locales',
+                data: null
+            }
+        }
+    }
+};
+
+export const createLocation = async (name: string, address: string, description: string | undefined): Promise<LocationResponse> => {
     try {
 
         if (!name || !address) {
@@ -24,7 +53,7 @@ export const createLocation = async (name: string, address: string, description:
         return {
             code: 200,
             message: 'Creado correctamente',
-            data: location
+            data: [location]
         }
     } catch (error) {
         console.error('🚀 ~ createLocation ~ error', error);
@@ -45,7 +74,7 @@ export const createLocation = async (name: string, address: string, description:
     }
 };
 
-export const deleteLocation = async (id: number): Promise<Response> => {
+export const deleteLocation = async (id: number): Promise<LocationResponse> => {
     try {
 
         const sale = await prisma.sale.findFirst({ where: { location_id: id } });
@@ -61,7 +90,7 @@ export const deleteLocation = async (id: number): Promise<Response> => {
         return {
             code: 200,
             message: 'Borrado correctamente',
-            data: deletedLocation
+            data: [deletedLocation]
         }
     } catch (error) {
         console.error("🚀 ~ deleteLocation ~ error:", error);
@@ -90,7 +119,7 @@ interface UpdateLocationParams {
     active: boolean;
 }
 
-export const updateLocation = async ({ id, name, address, description, active }: UpdateLocationParams): Promise<Response> => {
+export const updateLocation = async ({ id, name, address, description, active }: UpdateLocationParams): Promise<LocationResponse> => {
     try {
 
         if (!name || !address) {
@@ -107,7 +136,7 @@ export const updateLocation = async ({ id, name, address, description, active }:
         return {
             code: 200,
             message: 'Actualizado correctamente',
-            data: location
+            data: [location]
         }
     } catch (error) {
         console.error('🚀 ~ updateLocation ~ error', error);

@@ -13,7 +13,7 @@ export interface BrandResponse {
 export const getBrands = async (active?: boolean): Promise<BrandResponse> => {
 
   try {
-    const brands = await prisma.brand.findMany({ where: { active } });
+    const brands = await prisma.brand.findMany({ where: { active }, orderBy: { id: 'asc' } });
 
     return {
       code: 200,
@@ -23,10 +23,18 @@ export const getBrands = async (active?: boolean): Promise<BrandResponse> => {
   } catch (error) {
     console.error('🚀 ~ getBrands ~ error', error);
 
-    return {
-      code: 500,
-      message: 'Hubo un error al consultar las marcas',
-      data: null
+    if (error instanceof Error) {
+      return {
+        code: 400,
+        message: error.message,
+        data: null
+      }
+    } else {
+      return {
+        code: 500,
+        message: 'Hubo un error al consultar las marcas',
+        data: null
+      }
     }
   }
 };

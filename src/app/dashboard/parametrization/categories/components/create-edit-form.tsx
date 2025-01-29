@@ -61,10 +61,11 @@ const CreateEditForm = ({ category, setOpen }: Props) => {
       let response;
       if (category) {
         response = await updateCategory(category.id, data.name, data.active);
-        dispatch(api.util.invalidateTags(['Category']));
       } else {
         response = await createCategory(data.name);
       }
+
+      dispatch(api.util.invalidateTags(['Category']));
 
       if (response.code !== 200) {
         toast({

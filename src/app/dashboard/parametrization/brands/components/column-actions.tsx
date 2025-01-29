@@ -14,12 +14,15 @@ import { Button } from '@/components/ui/button';
 import { ResponsiveDialog } from '@/components/responsive-dialog';
 
 import { useToast } from '@/hooks/use-toast';
+import { useAppDispatch } from '@/redux';
+import { api } from '@/redux/api';
 
 import { deleteBrand } from '../brand-actions';
 import CreateEditForm from './create-edit-form';
 
 const Actions = ({ brand }: { brand: Brand }) => {
   const { toast } = useToast();
+  const dispatch = useAppDispatch();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -31,6 +34,8 @@ const Actions = ({ brand }: { brand: Brand }) => {
       setIsLoading(true);
 
       const response = await deleteBrand(brand.id);
+
+      dispatch(api.util.invalidateTags(['Brand']));
 
       if (response.code !== 200) {
         toast({

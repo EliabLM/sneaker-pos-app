@@ -10,6 +10,7 @@ import numeral from 'numeral';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import Actions from './column-actions';
 // import { Checkbox } from '@/components/ui/checkbox';
 
 const customStockBadge = (stock: number) => {
@@ -117,7 +118,9 @@ export const columns: ColumnDef<Product>[] = [
     header: 'Categoría',
     cell: ({ row }) => {
       const category = row.getValue('category') as Category;
-      return <Badge variant={'secondary'}>{category?.name}</Badge>;
+      return category ? (
+        <Badge variant={'secondary'}>{category?.name}</Badge>
+      ) : null;
     },
   },
   {
@@ -160,7 +163,7 @@ export const columns: ColumnDef<Product>[] = [
     },
     cell: ({ row }) => {
       const price = row.getValue('price') as number;
-      const formattedPrice = numeral(price).format('$0,0.00');
+      const formattedPrice = numeral(price).format('$0,0');
       return (
         <span className='font-medium text-gray-900 dark:text-white'>
           {formattedPrice}
@@ -181,12 +184,12 @@ export const columns: ColumnDef<Product>[] = [
       );
     },
   },
-  //   {
-  //     id: 'actions',
-  //     enableHiding: false,
-  //     cell: ({ row }) => {
-  //       const brand = row.original;
-  //       return <Actions brand={brand} />;
-  //     },
-  //   },
+  {
+    id: 'actions',
+    enableHiding: false,
+    cell: ({ row }) => {
+      const product = row.original;
+      return <Actions product={product} />;
+    },
+  },
 ];

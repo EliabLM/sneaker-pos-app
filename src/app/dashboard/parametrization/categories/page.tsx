@@ -2,11 +2,11 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 import TableHeader from '@/components/ui/table-header';
-import prisma from '@/lib/db';
 
 import { DataTable } from '../shared/data-table';
 import { columns } from './components/columns';
 import CreateCategoryForm from './components/create-category-form';
+import { getCategories } from './category-actions';
 
 export const metadata = {
   title: 'Categorías',
@@ -14,7 +14,7 @@ export const metadata = {
 };
 
 const CategoryPage = async () => {
-  const categories = await prisma.category.findMany({ orderBy: { id: 'asc' } });
+  const categoriesResponse = await getCategories();
 
   return (
     <div className='p-2'>
@@ -26,7 +26,7 @@ const CategoryPage = async () => {
       </TableHeader>
 
       <div className='w-full max-w-screen-xl px-4 mx-auto lg:px-12 mt-5'>
-        <DataTable columns={columns} data={categories} />
+        <DataTable columns={columns} data={categoriesResponse.data || []} />
       </div>
     </div>
   );

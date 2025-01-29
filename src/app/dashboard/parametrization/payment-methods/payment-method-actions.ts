@@ -4,13 +4,42 @@ import prisma from "@/lib/db";
 import { PaymentMethod } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-interface Response {
+interface PaymentMethodResponse {
     code: number;
     message: string;
-    data: PaymentMethod | PaymentMethod[] | null
+    data: PaymentMethod[] | null
 }
 
-export const createPaymentMethod = async (name: string): Promise<Response> => {
+export const getPaymentMethods = async (active?: boolean): Promise<PaymentMethodResponse> => {
+
+    try {
+        const paymentMethods = await prisma.paymentMethod.findMany({ where: { active }, orderBy: { id: 'asc' } });
+
+        return {
+            code: 200,
+            message: 'Consulta exitosa',
+            data: paymentMethods
+        }
+    } catch (error) {
+        console.error('🚀 ~ getPaymentMethods ~ error', error);
+
+        if (error instanceof Error) {
+            return {
+                code: 400,
+                message: error.message,
+                data: null
+            }
+        } else {
+            return {
+                code: 500,
+                message: 'Hubo un error al consultar los métodos de pago',
+                data: null
+            }
+        }
+    }
+};
+
+export const createPaymentMethod = async (name: string): Promise<PaymentMethodResponse> => {
     try {
 
         if (!name) {
@@ -24,7 +53,7 @@ export const createPaymentMethod = async (name: string): Promise<Response> => {
         return {
             code: 200,
             message: 'Creado correctamente',
-            data: paymentMethod
+            data: [paymentMethod]
         }
     } catch (error) {
         console.error('🚀 ~ createPaymentMethod ~ error', error);
@@ -45,7 +74,7 @@ export const createPaymentMethod = async (name: string): Promise<Response> => {
     }
 };
 
-export const deletePaymentMethod = async (id: number): Promise<Response> => {
+export const deletePaymentMethod = async (id: number): Promise<PaymentMethodResponse> => {
     try {
 
         const paymentMethod = await prisma.sale.findFirst({ where: { payment_method_id: id } });
@@ -61,7 +90,7 @@ export const deletePaymentMethod = async (id: number): Promise<Response> => {
         return {
             code: 200,
             message: 'Borrado correctamente',
-            data: deletedPaymentMethod
+            data: [deletedPaymentMethod]
         }
     } catch (error) {
         console.error("🚀 ~ deletePaymentMethod ~ error:", error);
@@ -82,7 +111,7 @@ export const deletePaymentMethod = async (id: number): Promise<Response> => {
     }
 }
 
-export const updatePaymentMethod = async (id: number, name: string, active: boolean): Promise<Response> => {
+export const updatePaymentMethod = async (id: number, name: string, active: boolean): Promise<PaymentMethodResponse> => {
     try {
 
         if (!name) {
@@ -99,7 +128,7 @@ export const updatePaymentMethod = async (id: number, name: string, active: bool
         return {
             code: 200,
             message: 'Actualizado correctamente',
-            data: paymentMethod
+            data: [paymentMethod]
         }
     } catch (error) {
         console.error('🚀 ~ updatePaymentMethod ~ error', error);
