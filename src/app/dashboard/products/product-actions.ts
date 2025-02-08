@@ -106,14 +106,14 @@ export const deleteProduct = async (id: number): Promise<ProductResponse> => {
             throw new Error('No se puede eliminar el producto porque tiene compras asociadas');
         }
 
-        const deleteProduct = await prisma.product.delete({ where: { id } });
+        const deletedProduct = await prisma.product.delete({ where: { id } });
 
         revalidatePath('/dashboard/products');
 
         return {
             code: 200,
             message: 'Borrado correctamente',
-            data: [deleteProduct]
+            data: [deletedProduct]
         }
     } catch (error) {
         console.error("🚀 ~ deleteProduct ~ error:", error);

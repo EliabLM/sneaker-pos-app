@@ -74,7 +74,6 @@ interface Props {
 }
 
 const CreateEditForm = ({ product, setOpen }: Props) => {
-  console.log('🚀 ~ CreateEditForm ~ product:', product);
   const { data: brandsRes } = useGetMarcasQuery(true);
   const { data: categoriesRes } = useGetCategoriesQuery(true);
 
