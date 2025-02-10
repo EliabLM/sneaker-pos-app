@@ -44,12 +44,23 @@ const FormSchema = yup.object().shape({
   name: yup
     .string()
     .required('El nombre es obligatorio')
+    .min(3, 'El nombre debe tener al menos 3 caracteres')
     .max(50, 'Puede ingresar máximo 50 caracteres')
+    .matches(
+      /^[A-Za-zÁáÉéÍíÓóÚúÜüÑñ\s']+$/, // Solo letras, espacios y apóstrofes
+      'El nombre solo puede contener letras y espacios'
+    )
+    .test(
+      'no-double-spaces',
+      'No se permiten múltiples espacios seguidos',
+      (value) => !/\s{2,}/.test(value) // Rechaza múltiples espacios
+    )
     .trim(),
   email: yup
     .string()
     .required('El email es obligatorio')
     .email('El email no es válido')
+    .max(80, 'El email debe tener máximo 80 caracteres')
     .trim(),
   image: yup.string().default(''),
   role: yup
@@ -141,9 +152,13 @@ const CreateEditForm = ({ user, setOpen }: Props) => {
                 <FormControl>
                   <Input
                     {...field}
+                    onChange={(e) => {
+                      field.onChange(e.target.value.toUpperCase());
+                    }}
                     id={field.name}
                     placeholder='ABC123'
                     required
+                    maxLength={6}
                   />
                 </FormControl>
                 <FormMessage />
@@ -207,7 +222,7 @@ const CreateEditForm = ({ user, setOpen }: Props) => {
                   <SelectContent>
                     {['SELLER', 'ADMIN'].map((role) => (
                       <SelectItem key={role} value={role}>
-                        {role}
+                        {role === 'SELLER' ? 'Vendedor' : 'Administrador'}
                       </SelectItem>
                     ))}
                   </SelectContent>
